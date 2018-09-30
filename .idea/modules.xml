@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/flutrans.iml" filepath="$PROJECT_DIR$/flutrans.iml" />
+      <module fileurl="file://$PROJECT_DIR$/flutrans_android.iml" filepath="$PROJECT_DIR$/flutrans_android.iml" />
+    </modules>
+  </component>
+</project>
