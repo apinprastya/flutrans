@@ -40,7 +40,7 @@ android:theme="@style/AppTheme"
 The plugin not working on IOS at the moment
 
 ## Example usage
-```
+```dart
 import 'package:flutrans/flutrans.dart';
 ...
 final flutrans = Flutrans();
