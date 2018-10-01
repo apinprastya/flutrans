@@ -1,9 +1,8 @@
 name: flutrans
-description: A new flutter plugin project.
+description: Plugin for Midtrans payment gateway.
 version: 0.0.1
-author:
-homepage:
-
+author: Apin <apin.klas@gmail.com>
+homepage: https://github.com/apinprastya/flutrans
 environment:
   sdk: ">=2.0.0-dev.68.0 <3.0.0"
 
