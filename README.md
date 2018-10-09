@@ -2,13 +2,6 @@
 
 Flutter Midtrans Payment Plugin
 
-## Install
-Add to your pubspec.yaml
-```
-dependencies:
-  flutrans: ^0.0.1
-```
-
 ## Android setup
 Add style to your android/app/src/main/res/values/styles.xml :
 ```
@@ -37,7 +30,7 @@ And add the style to you Android Manifest in your application tag :
 android:theme="@style/AppTheme"
 ```
 ## IOS
-The plugin not working on IOS at the moment
+No specific setup required
 
 ## Example usage
 ```dart
