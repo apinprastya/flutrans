@@ -10,23 +10,22 @@ class Flutrans {
   static const MethodChannel _channel = const MethodChannel('flutrans');
 
   Flutrans._internal() {
-    _channel.setMethodCallHandler(channelHandler);
+    _channel.setMethodCallHandler(_channelHandler);
   }
 
   factory Flutrans() {
     return _instance;
   }
 
-  Future<dynamic> channelHandler(MethodCall methodCall) async {
+  Future<dynamic> _channelHandler(MethodCall methodCall) async {
     if (methodCall.method == "onTransactionFinished") {
-      Map<String, dynamic> args = methodCall.arguments;
       if (finishCallback != null) {
         await finishCallback(TransactionFinished(
-          args['transactionCanceled'],
-          args['status'],
-          args['source'],
-          args['statusMessage'],
-          args['response'],
+          methodCall.arguments['transactionCanceled'],
+          methodCall.arguments['status'],
+          methodCall.arguments['source'],
+          methodCall.arguments['statusMessage'],
+          methodCall.arguments['response'],
         ));
       }
     }
@@ -37,10 +36,12 @@ class Flutrans {
     finishCallback = callback;
   }
 
-  Future<void> init(String clientId, String url) async {
+  Future<void> init(String clientId, String url,
+      {String env = 'production'}) async {
     await _channel.invokeMethod("init", {
       "client_key": clientId,
       "base_url": url,
+      "env": env,
     });
     return Future.value(null);
   }
