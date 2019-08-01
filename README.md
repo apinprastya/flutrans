@@ -3,6 +3,10 @@
 Flutter Midtrans Payment Plugin
 
 ## Android setup
+
+**This plugin not support AndroidX**
+**Works with compile SDK 27**
+
 Add style to your android/app/src/main/res/values/styles.xml :
 ```
 <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">

@@ -35,6 +35,6 @@ android {
     }
     
     dependencies {
-        compile 'com.midtrans:uikit:1.15.0'
+        compile 'com.midtrans:uikit:1.22.2'
     }
 }
