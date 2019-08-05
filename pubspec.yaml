@@ -1,6 +1,6 @@
 name: flutrans
 description: Plugin for Midtrans payment gateway.
-version: 0.0.2
+version: 0.0.4
 author: Apin <apin.klas@gmail.com>
 homepage: https://github.com/apinprastya/flutrans
 environment:

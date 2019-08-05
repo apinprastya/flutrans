@@ -4,8 +4,7 @@ Flutter Midtrans Payment Plugin
 
 ## Android setup
 
-**This plugin not support AndroidX**
-**Works with compile SDK 27**
+**Only support AndroidX and compile targe minimum 28**
 
 Add style to your android/app/src/main/res/values/styles.xml :
 ```

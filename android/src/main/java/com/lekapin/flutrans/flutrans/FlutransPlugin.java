@@ -57,7 +57,7 @@ public class FlutransPlugin implements MethodCallHandler, TransactionFinishedCal
   private void initMidtransSdk(String client_key, String base_url) {
     SdkUIFlowBuilder.init()
             .setClientKey(client_key) // client_key is mandatory
-            .setContext(registrar.context()) // context is mandatory
+            .setContext(registrar.activity().getApplicationContext()) // context is mandatory
             .setTransactionFinishedCallback(this) // set transaction finish callback (sdk callback)
             .setMerchantBaseUrl(base_url) //set merchant url
             .enableLog(true) // enable sdk log
@@ -93,7 +93,7 @@ public class FlutransPlugin implements MethodCallHandler, TransactionFinishedCal
         setting.setSkipCustomerDetailsPages(json.getBoolean("skip_customer"));
       MidtransSDK.getInstance().setUIKitCustomSetting(setting);
       MidtransSDK.getInstance().setTransactionRequest(transactionRequest);
-      MidtransSDK.getInstance().startPaymentUiFlow(this.registrar.context());
+      MidtransSDK.getInstance().startPaymentUiFlow(this.registrar.activity().getApplicationContext());
     } catch(Exception e) {
       Log.d(TAG, "ERROR " + e.getMessage());
     }
