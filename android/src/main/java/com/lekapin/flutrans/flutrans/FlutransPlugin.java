@@ -1,4 +1,5 @@
 package com.lekapin.flutrans.flutrans;
+import android.content.Context;
 import android.util.Log;
 
 import com.google.gson.JsonObject;
@@ -30,6 +31,7 @@ public class FlutransPlugin implements MethodCallHandler, TransactionFinishedCal
   static final String TAG = "FlutransPlugin";
   private final Registrar registrar;
   private final MethodChannel channel;
+  private Context context;
 
   /** Plugin registration. */
   public static void registerWith(Registrar registrar) {
@@ -40,6 +42,7 @@ public class FlutransPlugin implements MethodCallHandler, TransactionFinishedCal
   private FlutransPlugin(Registrar registrar, MethodChannel channel) {
     this.registrar = registrar;
     this.channel = channel;
+    this.context = registrar.activeContext();
   }
 
   @Override
@@ -57,7 +60,7 @@ public class FlutransPlugin implements MethodCallHandler, TransactionFinishedCal
   private void initMidtransSdk(String client_key, String base_url) {
     SdkUIFlowBuilder.init()
             .setClientKey(client_key) // client_key is mandatory
-            .setContext(registrar.activity().getApplicationContext()) // context is mandatory
+            .setContext(context) // context is mandatory
             .setTransactionFinishedCallback(this) // set transaction finish callback (sdk callback)
             .setMerchantBaseUrl(base_url) //set merchant url
             .enableLog(true) // enable sdk log
@@ -93,7 +96,7 @@ public class FlutransPlugin implements MethodCallHandler, TransactionFinishedCal
         setting.setSkipCustomerDetailsPages(json.getBoolean("skip_customer"));
       MidtransSDK.getInstance().setUIKitCustomSetting(setting);
       MidtransSDK.getInstance().setTransactionRequest(transactionRequest);
-      MidtransSDK.getInstance().startPaymentUiFlow(this.registrar.activity().getApplicationContext());
+      MidtransSDK.getInstance().startPaymentUiFlow(context);
     } catch(Exception e) {
       Log.d(TAG, "ERROR " + e.getMessage());
     }
