@@ -67,7 +67,7 @@ FlutterMethodChannel* channel;
           MidtransAddress *address = [MidtransAddress addressWithFirstName:@"flutrans" lastName:@"flutrans" phone:@"081" address:@"address" city:@"city" postalCode:@"55181" countryCode:@"id"];
           MidtransCustomerDetails *custDetail = [[MidtransCustomerDetails alloc] initWithFirstName:customer[@"first_name"] lastName: customer[@"last_name"] email: customer[@"email"] phone: customer[@"phone"] shippingAddress:address billingAddress:address];
           MidtransTransactionDetails *transDetail = [MidtransTransactionDetails alloc];
-          [transDetail initWithOrderID:[NSString stringWithFormat:@"%f", timeInSeconds] andGrossAmount:[NSNumber numberWithInt: json[@"total"]]];
+          [transDetail initWithOrderID:[NSString stringWithFormat:@"%f", timeInSeconds] andGrossAmount: json[@"total"]];
           NSMutableArray *arr = [NSMutableArray new];
           NSArray *items = json[@"items"];
           for(int i = 0; i < [items count]; i++) {
