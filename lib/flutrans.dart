@@ -36,21 +36,13 @@ class Flutrans {
     finishCallback = callback;
   }
 
-  Future<void> init(String clientId, String url,
-      {String env = 'production'}) async {
-    await _channel.invokeMethod("init", {
-      "client_key": clientId,
-      "base_url": url,
-      "env": env,
-    });
+  Future<void> init(String clientId, String url) async {
+    await _channel
+        .invokeMethod("init", {"client_key": clientId, "base_url": url});
     return Future.value(null);
   }
 
   Future<void> makePayment(MidtransTransaction transaction) async {
-    /*int total = 0;
-    transaction.items.forEach((v) => total += (v.price * v.quantity));
-    if (total != transaction.total)
-      throw "Transaction total and items total not equal";*/
     await _channel.invokeMethod("payment", jsonEncode(transaction.toJson()));
     return Future.value(null);
   }
@@ -61,12 +53,15 @@ class MidtransCustomer {
   final String lastName;
   final String email;
   final String phone;
+
   MidtransCustomer(this.firstName, this.lastName, this.email, this.phone);
+
   MidtransCustomer.fromJson(Map<String, dynamic> json)
       : firstName = json["first_name"],
         lastName = json["last_name"],
         email = json["email"],
         phone = json["phone"];
+
   Map<String, dynamic> toJson() {
     return {
       "first_name": firstName,
@@ -82,12 +77,15 @@ class MidtransItem {
   final int price;
   final int quantity;
   final String name;
+
   MidtransItem(this.id, this.price, this.quantity, this.name);
+
   MidtransItem.fromJson(Map<String, dynamic> json)
       : id = json["id"],
         price = json["price"],
         quantity = json["quantity"],
         name = json["name"];
+
   Map<String, dynamic> toJson() {
     return {
       "id": id,
@@ -104,20 +102,28 @@ class MidtransTransaction {
   final List<MidtransItem> items;
   final bool skipCustomer;
   final String customField1;
+  final String customField2;
+  final String customField3;
+
   MidtransTransaction(
     this.total,
     this.customer,
     this.items, {
-    this.customField1,
     this.skipCustomer = false,
+    this.customField1,
+    this.customField2,
+    this.customField3,
   });
+
   Map<String, dynamic> toJson() {
     return {
       "total": total,
-      "skip_customer": skipCustomer,
+      "customer": customer,
       "items": items.map((v) => v.toJson()).toList(),
-      "customer": customer.toJson(),
+      "skip_customer": skipCustomer,
       "custom_field_1": customField1,
+      "custom_field_2": customField2,
+      "custom_field_3": customField3,
     };
   }
 }
@@ -127,12 +133,8 @@ class TransactionFinished {
   final String status;
   final String source;
   final String statusMessage;
-  final String response;
-  TransactionFinished(
-    this.transactionCanceled,
-    this.status,
-    this.source,
-    this.statusMessage,
-    this.response,
-  );
+  final Map<dynamic, dynamic> response;
+
+  TransactionFinished(this.transactionCanceled, this.status, this.source,
+      this.statusMessage, this.response);
 }
