@@ -168,7 +168,7 @@ public class FlutransPlugin implements MethodCallHandler, TransactionFinishedCal
             transactionResultResponseData.put("paymentCodeResponse", transactionResult.getResponse().getPaymentCodeResponse());
             transactionResultResponseData.put("paymentType", transactionResult.getResponse().getPaymentType());
             transactionResultResponseData.put("pdfUrl", transactionResult.getResponse().getPdfUrl());
-            transactionResultResponseData.put("permataVaNumber", transactionResult.getResponse().getPermataVaNumber());
+            transactionResultResponseData.put("permataVaNumber", transactionResult.getResponse().getPermataVANumber());
             transactionResultResponseData.put("permataExpiration", transactionResult.getResponse().getPermataExpiration());
             transactionResultResponseData.put("pointBalance", transactionResult.getResponse().getPointBalance());
             transactionResultResponseData.put("pointBalanceAmount", transactionResult.getResponse().getPointBalanceAmount());
