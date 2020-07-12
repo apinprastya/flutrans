@@ -54,6 +54,13 @@ class Flutrans {
     await _channel.invokeMethod("payment", jsonEncode(transaction.toJson()));
     return Future.value(null);
   }
+
+  Future<void> makeDirectPaymentWithToken(
+      int method, String token, bool skipCustomer) async {
+    await _channel.invokeMethod("directpaymentwithtoken",
+        {"method": method, "token": token, "skipCustomer": skipCustomer});
+    return Future.value(null);
+  }
 }
 
 class MidtransCustomer {
@@ -135,4 +142,30 @@ class TransactionFinished {
     this.statusMessage,
     this.response,
   );
+}
+
+class PaymentMethod {
+  static int CREDIT_CARD = 0;
+  static int BANK_TRANSFER = 1;
+  static int BANK_TRANSFER_BCA = 2;
+  static int BANK_TRANSFER_MANDIRI = 3;
+  static int BANK_TRANSFER_PERMATA = 4;
+  static int BANK_TRANSFER_BNI = 5;
+  static int BANK_TRANSFER_OTHER = 6;
+  static int GO_PAY = 7;
+  static int BCA_KLIKPAY = 8;
+  static int KLIKBCA = 9;
+  static int MANDIRI_CLICKPAY = 10;
+  static int MANDIRI_ECASH = 11;
+  static int EPAY_BRI = 12;
+  static int CIMB_CLICKS = 13;
+  static int INDOMARET = 14;
+  static int KIOSON = 15;
+  static int GIFT_CARD_INDONESIA = 16;
+  static int INDOSAT_DOMPETKU = 17;
+  static int TELKOMSEL_CASH = 18;
+  static int XL_TUNAI = 19;
+  static int DANAMON_ONLINE = 20;
+  static int AKULAKU = 21;
+  static int ALFAMART = 22;
 }

@@ -5,6 +5,7 @@ import android.util.Log;
 import com.google.gson.JsonObject;
 import com.midtrans.sdk.corekit.callback.TransactionFinishedCallback;
 import com.midtrans.sdk.corekit.core.MidtransSDK;
+import com.midtrans.sdk.corekit.core.PaymentMethod;
 import com.midtrans.sdk.corekit.core.TransactionRequest;
 import com.midtrans.sdk.corekit.core.UIKitCustomSetting;
 import com.midtrans.sdk.corekit.core.themes.CustomColorTheme;
@@ -52,6 +53,9 @@ public class FlutransPlugin implements MethodCallHandler, TransactionFinishedCal
     } else if(call.method.equals("payment")) {
       String str = call.arguments();
       payment(str);
+    } else if(call.method.equals("directpaymentwithtoken")) {
+      HashMap map = call.arguments();
+      directPaymentWithToken((int)map.get("method"), (String)map.get("token"), (Boolean)map.get("skipCustomer"));
     } else {
       result.notImplemented();
     }
@@ -115,4 +119,16 @@ public class FlutransPlugin implements MethodCallHandler, TransactionFinishedCal
         content.put("response", null);
       channel.invokeMethod("onTransactionFinished", content);
   }
+
+  void directPaymentWithToken(int method, String token, boolean skipCustomer) {
+    try {
+      UIKitCustomSetting setting = MidtransSDK.getInstance().getUIKitCustomSetting();
+      setting.setSkipCustomerDetailsPages(skipCustomer);
+      MidtransSDK.getInstance().setUIKitCustomSetting(setting);
+      MidtransSDK.getInstance().startPaymentUiFlow(context, PaymentMethod.values()[method], token);
+    } catch(Exception e) {
+      Log.d(TAG, "ERROR " + e.getMessage());
+    }
+  }
+
 }

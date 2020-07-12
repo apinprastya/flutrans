@@ -27,7 +27,7 @@ android {
     compileSdkVersion 28
 
     defaultConfig {
-        minSdkVersion 16
+        minSdkVersion 18
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     lintOptions {
@@ -35,6 +35,6 @@ android {
     }
     
     dependencies {
-        compile 'com.midtrans:uikit:1.22.2'
+        compile 'com.midtrans:uikit:1.23.2'
     }
 }
