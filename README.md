@@ -2,6 +2,8 @@
 
 Flutter Midtrans Payment Plugin
 
+> Please Read [Midtrans Documentation](https://docs.midtrans.com/) before use this library and make sure you are already has Midtrans account for accessing the dashboard.
+
 ## Android setup
 
 **Only support AndroidX and compile targe minimum 28**
@@ -36,6 +38,12 @@ android:theme="@style/AppTheme"
 No specific setup required
 
 ## Example usage
+
+Make sure you are already prepare these variables.
+
+- `YOUR_CLIENT_ID`: Midtrans CLIENT ID
+- `YOUR_URL_BASE`: Your backend URL base API to process payment
+
 ```dart
 import 'package:flutrans/flutrans.dart';
 ...
