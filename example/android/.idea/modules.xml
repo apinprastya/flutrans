@@ -2,9 +2,15 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/android.iml" filepath="$PROJECT_DIR$/.idea/android.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../../android/flutrans.iml" filepath="$PROJECT_DIR$/../../android/flutrans.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/android.iml" filepath="$PROJECT_DIR$/.idea/modules/android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/android.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/android.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/android.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/android.app.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/android.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/android.app.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/android.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/android.app.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/942904285/android.flutrans.iml" filepath="$PROJECT_DIR$/.idea/modules/942904285/android.flutrans.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/942904285/android.flutrans.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/942904285/android.flutrans.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/942904285/android.flutrans.main.iml" filepath="$PROJECT_DIR$/.idea/modules/942904285/android.flutrans.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/942904285/android.flutrans.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/942904285/android.flutrans.unitTest.iml" />
     </modules>
   </component>
 </project>

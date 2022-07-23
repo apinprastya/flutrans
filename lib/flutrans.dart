@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 typedef Future<void> MidtransCallback(TransactionFinished transactionFinished);
 
 class Flutrans {
-  MidtransCallback finishCallback;
+  MidtransCallback? finishCallback;
   static Flutrans _instance = Flutrans._internal();
   static const MethodChannel _channel = const MethodChannel('flutrans');
 
@@ -20,7 +20,7 @@ class Flutrans {
   Future<dynamic> _channelHandler(MethodCall methodCall) async {
     if (methodCall.method == "onTransactionFinished") {
       if (finishCallback != null) {
-        await finishCallback(TransactionFinished(
+        await finishCallback!(TransactionFinished(
           methodCall.arguments['transactionCanceled'],
           methodCall.arguments['status'],
           methodCall.arguments['source'],
@@ -36,8 +36,7 @@ class Flutrans {
     finishCallback = callback;
   }
 
-  Future<void> init(String clientId, String url,
-      {String env = 'production'}) async {
+  Future<void> init(String clientId, String url, {String env = 'production'}) async {
     await _channel.invokeMethod("init", {
       "client_key": clientId,
       "base_url": url,
@@ -55,10 +54,8 @@ class Flutrans {
     return Future.value(null);
   }
 
-  Future<void> makeDirectPaymentWithToken(
-      int method, String token, bool skipCustomer) async {
-    await _channel.invokeMethod("directpaymentwithtoken",
-        {"method": method, "token": token, "skipCustomer": skipCustomer});
+  Future<void> makeDirectPaymentWithToken(int method, String token, bool skipCustomer) async {
+    await _channel.invokeMethod("directpaymentwithtoken", {"method": method, "token": token, "skipCustomer": skipCustomer});
     return Future.value(null);
   }
 }
@@ -115,7 +112,7 @@ class MidtransTransaction {
     this.total,
     this.customer,
     this.items, {
-    this.customField1,
+    required this.customField1,
     this.skipCustomer = false,
   });
   Map<String, dynamic> toJson() {

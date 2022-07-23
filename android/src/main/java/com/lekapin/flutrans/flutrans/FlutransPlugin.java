@@ -2,13 +2,10 @@ package com.lekapin.flutrans.flutrans;
 import android.content.Context;
 import android.util.Log;
 
-import com.google.gson.JsonObject;
-import com.midtrans.sdk.corekit.callback.TransactionFinishedCallback;
 import com.midtrans.sdk.corekit.core.MidtransSDK;
 import com.midtrans.sdk.corekit.core.PaymentMethod;
 import com.midtrans.sdk.corekit.core.TransactionRequest;
 import com.midtrans.sdk.corekit.core.UIKitCustomSetting;
-import com.midtrans.sdk.corekit.core.themes.CustomColorTheme;
 import com.midtrans.sdk.corekit.models.CustomerDetails;
 import com.midtrans.sdk.corekit.models.ItemDetails;
 import com.midtrans.sdk.corekit.models.snap.TransactionResult;
@@ -21,29 +18,30 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
 import io.flutter.plugin.common.MethodChannel.Result;
-import io.flutter.plugin.common.PluginRegistry.Registrar;
+
+import androidx.annotation.NonNull;
 
 /** FlutransPlugin */
-public class FlutransPlugin implements MethodCallHandler, TransactionFinishedCallback {
+public class FlutransPlugin implements FlutterPlugin, MethodCallHandler {
   static final String TAG = "FlutransPlugin";
-  private final Registrar registrar;
-  private final MethodChannel channel;
+  private MethodChannel channel;
   private Context context;
 
-  /** Plugin registration. */
-  public static void registerWith(Registrar registrar) {
-    final MethodChannel channel = new MethodChannel(registrar.messenger(), "flutrans");
-    channel.setMethodCallHandler(new FlutransPlugin(registrar, channel));
+  @Override
+  public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
+    channel = new MethodChannel(flutterPluginBinding.getBinaryMessenger(), "myplugin");
+    channel.setMethodCallHandler(this);
+    context = flutterPluginBinding.getApplicationContext();
   }
 
-  private FlutransPlugin(Registrar registrar, MethodChannel channel) {
-    this.registrar = registrar;
-    this.channel = channel;
-    this.context = registrar.activeContext();
+  @Override
+  public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
+    channel.setMethodCallHandler(null);
   }
 
   @Override
@@ -65,9 +63,12 @@ public class FlutransPlugin implements MethodCallHandler, TransactionFinishedCal
     SdkUIFlowBuilder.init()
             .setClientKey(client_key) // client_key is mandatory
             .setContext(context) // context is mandatory
-            .setTransactionFinishedCallback(this) // set transaction finish callback (sdk callback)
+            .setTransactionFinishedCallback(transactionResult -> {
+              onTransactionFinished(transactionResult);
+            })
             .setMerchantBaseUrl(base_url) //set merchant url
             .enableLog(true) // enable sdk log
+            .setLanguage("id")
             //.setColorTheme(new CustomColorTheme("#4CAF50", "#009688", "#CDDC39")) // will replace theme on snap theme on MAP
             .buildSDK();
   }
@@ -106,7 +107,7 @@ public class FlutransPlugin implements MethodCallHandler, TransactionFinishedCal
     }
   }
 
-  @Override
+  //@Override
   public void onTransactionFinished(TransactionResult transactionResult) {
       Map<String, Object> content = new HashMap<>();
       content.put("transactionCanceled", transactionResult.isTransactionCanceled());
