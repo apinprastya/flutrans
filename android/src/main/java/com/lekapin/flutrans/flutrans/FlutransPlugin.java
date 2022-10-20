@@ -34,7 +34,7 @@ public class FlutransPlugin implements FlutterPlugin, MethodCallHandler {
 
   @Override
   public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
-    channel = new MethodChannel(flutterPluginBinding.getBinaryMessenger(), "myplugin");
+    channel = new MethodChannel(flutterPluginBinding.getBinaryMessenger(), "flutrans");
     channel.setMethodCallHandler(this);
     context = flutterPluginBinding.getApplicationContext();
   }
