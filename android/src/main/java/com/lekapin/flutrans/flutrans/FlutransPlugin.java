@@ -1,4 +1,5 @@
 package com.lekapin.flutrans.flutrans;
+import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 
@@ -19,6 +20,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
+import io.flutter.embedding.engine.plugins.activity.ActivityAware;
+import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
@@ -27,16 +30,16 @@ import io.flutter.plugin.common.MethodChannel.Result;
 import androidx.annotation.NonNull;
 
 /** FlutransPlugin */
-public class FlutransPlugin implements FlutterPlugin, MethodCallHandler {
+public class FlutransPlugin implements FlutterPlugin, MethodCallHandler, ActivityAware {
   static final String TAG = "FlutransPlugin";
   private MethodChannel channel;
   private Context context;
+  private Activity activity;
 
   @Override
   public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
     channel = new MethodChannel(flutterPluginBinding.getBinaryMessenger(), "flutrans");
     channel.setMethodCallHandler(this);
-    context = flutterPluginBinding.getApplicationContext();
   }
 
   @Override
@@ -126,10 +129,31 @@ public class FlutransPlugin implements FlutterPlugin, MethodCallHandler {
       UIKitCustomSetting setting = MidtransSDK.getInstance().getUIKitCustomSetting();
       setting.setSkipCustomerDetailsPages(skipCustomer);
       MidtransSDK.getInstance().setUIKitCustomSetting(setting);
-      MidtransSDK.getInstance().startPaymentUiFlow(context, PaymentMethod.values()[method], token);
+      MidtransSDK.getInstance().startPaymentUiFlow(activity, PaymentMethod.values()[method], token);
     } catch(Exception e) {
       Log.d(TAG, "ERROR " + e.getMessage());
     }
   }
 
+  @Override
+  public void onAttachedToActivity(@NonNull ActivityPluginBinding binding) {
+    context = binding.getActivity().getApplicationContext();
+    activity = binding.getActivity();
+  }
+
+  @Override
+  public void onDetachedFromActivityForConfigChanges() {
+
+  }
+
+  @Override
+  public void onReattachedToActivityForConfigChanges(@NonNull ActivityPluginBinding binding) {
+    context = binding.getActivity().getApplicationContext();
+    activity = binding.getActivity();
+  }
+
+  @Override
+  public void onDetachedFromActivity() {
+
+  }
 }
