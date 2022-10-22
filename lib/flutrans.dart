@@ -129,9 +129,9 @@ class MidtransTransaction {
 class TransactionFinished {
   final bool transactionCanceled;
   final String status;
-  final String source;
-  final String statusMessage;
-  final String response;
+  final String? source;
+  final String? statusMessage;
+  final String? response;
   TransactionFinished(
     this.transactionCanceled,
     this.status,
