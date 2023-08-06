@@ -104,7 +104,7 @@ FlutterMethodChannel* channel;
       id delegate = [FlutransPayment alloc];
       [[MidtransMerchantClient shared] requestTransacationWithCurrentToken:paymentToken completion:^(MidtransTransactionTokenResponse * _Nullable token, NSError * _Nullable error) {
           if(token) {
-              MidtransUIPaymentViewController *vc = [[MidtransUIPaymentViewController new] initWithToken:paymentToken];
+              MidtransUIPaymentViewController *vc = [[MidtransUIPaymentViewController new] initWithToken:token];
               vc.paymentDelegate = delegate;
               UIViewController *viewController = [UIApplication sharedApplication].keyWindow.rootViewController;
               [viewController presentViewController:vc animated:YES completion:nil];
