@@ -34,6 +34,13 @@ FlutterMethodChannel* channel;
     [ret setObject:@YES forKey:@"transactionCanceled"];
     [channel invokeMethod:@"onTransactionFinished" arguments:ret];
 }
+
+- (void)paymentViewController:(MidtransUIPaymentViewController *)viewController paymentDeny:(MidtransTransactionResult *)result {
+    NSMutableDictionary *ret = [[NSMutableDictionary alloc] init];
+    [ret setObject:@YES forKey:@"transactionCanceled"];
+    [channel invokeMethod:@"onTransactionFinished" arguments:ret];
+}
+
 @end
 
 @implementation FlutransPlugin
@@ -82,15 +89,27 @@ FlutterMethodChannel* channel;
           [arrayOfCustomField addObject:@{MIDTRANS_CUSTOMFIELD_3:@""}];
           [[MidtransMerchantClient shared] requestTransactionTokenWithTransactionDetails:transDetail itemDetails:arr customerDetails:custDetail customField:arrayOfCustomField binFilter:nil blacklistBinFilter:nil transactionExpireTime:nil completion:^(MidtransTransactionTokenResponse *token, NSError *error)
            {
-               if (token) {
-                   MidtransUIPaymentViewController *vc = [[MidtransUIPaymentViewController new] initWithToken:token];
-                   vc.paymentDelegate = delegate;
-                   UIViewController *viewController = [UIApplication sharedApplication].keyWindow.rootViewController;
-                   [viewController presentViewController:vc animated:YES completion:nil];
-               }
-           }];
+              if (token) {
+                  MidtransUIPaymentViewController *vc = [[MidtransUIPaymentViewController new] initWithToken:token];
+                  vc.paymentDelegate = delegate;
+                  UIViewController *viewController = [UIApplication sharedApplication].keyWindow.rootViewController;
+                  [viewController presentViewController:vc animated:YES completion:nil];
+              }
+          }];
           return result(0);
       }
+  } else if ([@"directpaymentwithtoken" isEqualToString:call.method]) {
+      NSDictionary *dict = call.arguments;
+      NSString *paymentToken = dict[@"token"];
+      id delegate = [FlutransPayment alloc];
+      [[MidtransMerchantClient shared] requestTransacationWithCurrentToken:paymentToken completion:^(MidtransTransactionTokenResponse * _Nullable token, NSError * _Nullable error) {
+          if(token) {
+              MidtransUIPaymentViewController *vc = [[MidtransUIPaymentViewController new] initWithToken:paymentToken];
+              vc.paymentDelegate = delegate;
+              UIViewController *viewController = [UIApplication sharedApplication].keyWindow.rootViewController;
+              [viewController presentViewController:vc animated:YES completion:nil];
+          }
+      }];
   } else {
     result(FlutterMethodNotImplemented);
   }
