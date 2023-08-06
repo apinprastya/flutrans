@@ -27,8 +27,7 @@ class _MyAppState extends State<MyApp> {
         .makePayment(
           MidtransTransaction(
               7500,
-              MidtransCustomer(
-                  "Apin", "Prastya", "apin.klas@gmail.com", "085235419949"),
+              MidtransCustomer("Apin", "Prastya", "apin.klas@gmail.com", "085235419949"),
               [
                 MidtransItem(
                   "5c18ea1256f67560cb6a00cdde3c3c7a81026c29",
@@ -60,7 +59,7 @@ class _MyAppState extends State<MyApp> {
         body: new Center(
           child: isMakePayment
               ? CircularProgressIndicator()
-              : RaisedButton(
+              : ElevatedButton(
                   child: Text("Make Payment"),
                   onPressed: () => _makePayment(),
                 ),

@@ -55,7 +55,8 @@ class Flutrans {
   }
 
   Future<void> makeDirectPaymentWithToken(int method, String token, bool skipCustomer) async {
-    await _channel.invokeMethod("directpaymentwithtoken", {"method": method, "token": token, "skipCustomer": skipCustomer});
+    await _channel
+        .invokeMethod("directpaymentwithtoken", {"method": method, "token": token, "skipCustomer": skipCustomer});
     return Future.value(null);
   }
 }

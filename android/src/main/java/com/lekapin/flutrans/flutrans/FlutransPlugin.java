@@ -129,7 +129,11 @@ public class FlutransPlugin implements FlutterPlugin, MethodCallHandler, Activit
       UIKitCustomSetting setting = MidtransSDK.getInstance().getUIKitCustomSetting();
       setting.setSkipCustomerDetailsPages(skipCustomer);
       MidtransSDK.getInstance().setUIKitCustomSetting(setting);
-      MidtransSDK.getInstance().startPaymentUiFlow(activity, PaymentMethod.values()[method], token);
+      if(method == -1) {
+        MidtransSDK.getInstance().startPaymentUiFlow(activity, token);
+      } else {
+        MidtransSDK.getInstance().startPaymentUiFlow(activity, PaymentMethod.values()[method], token);
+      }
     } catch(Exception e) {
       Log.d(TAG, "ERROR " + e.getMessage());
     }
